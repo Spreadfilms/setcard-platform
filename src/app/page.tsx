@@ -1,65 +1,75 @@
-import Image from "next/image";
+import Link from "next/link";
 
-export default function Home() {
+export default function LandingPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="min-h-screen bg-white flex flex-col">
+      {/* Header */}
+      <header className="flex items-center justify-between px-8 py-6 border-b border-[#E5E5E5]">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-[#0A0A0A] rounded-lg" />
+          <span className="font-semibold text-[#0A0A0A] text-lg">Spreadfilms Casting</span>
+        </div>
+        <Link
+          href="/admin/login"
+          className="text-sm text-[#737373] hover:text-[#0A0A0A] transition-colors duration-200"
+        >
+          Admin →
+        </Link>
+      </header>
+
+      {/* Hero */}
+      <section className="flex-1 flex flex-col items-center justify-center px-8 py-24 text-center">
+        <div className="max-w-2xl mx-auto space-y-8">
+          <p className="text-xs font-medium uppercase tracking-[0.15em] text-[#737373]">
+            Casting Platform
           </p>
+          <h1 className="text-5xl md:text-6xl font-bold text-[#0A0A0A] leading-tight tracking-tight">
+            Deine SetCard.
+            <br />
+            <span className="text-[#737373]">Professionell.</span>
+          </h1>
+          <p className="text-lg text-[#737373] max-w-lg mx-auto leading-relaxed">
+            Erstelle dein digitales Profil für Casting-Anfragen bei Spreadfilms.
+            Schnell, einfach und professionell.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+            <Link
+              href="/neu"
+              className="inline-flex items-center justify-center px-8 py-4 bg-[#0A0A0A] text-white font-medium rounded-xl hover:opacity-90 transition-opacity duration-200 text-base"
+            >
+              SetCard anlegen
+            </Link>
+            <Link
+              href="/update"
+              className="inline-flex items-center justify-center px-8 py-4 bg-white text-[#0A0A0A] font-medium rounded-xl border border-[#E5E5E5] hover:border-[#0A0A0A] transition-colors duration-200 text-base"
+            >
+              SetCard aktualisieren
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Features */}
+      <section className="px-8 py-16 border-t border-[#E5E5E5]">
+        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[
+            { icon: "✦", title: "5 einfache Schritte", description: "Geführtes Formular – von persönlichen Daten bis zu deinen Fotos." },
+            { icon: "◎", title: "Live-Vorschau", description: "Sieh deine SetCard in Echtzeit, während du sie ausfüllst." },
+            { icon: "⟳", title: "Jederzeit aktualisieren", description: "PIN-gesicherter Zugang – aktualisiere dein Profil, wann du willst." }
+          ].map((f) => (
+            <div key={f.title} className="space-y-3">
+              <div className="w-10 h-10 flex items-center justify-center text-xl">{f.icon}</div>
+              <h3 className="font-semibold text-[#0A0A0A]">{f.title}</h3>
+              <p className="text-sm text-[#737373] leading-relaxed">{f.description}</p>
+            </div>
+          ))}
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="px-8 py-6 border-t border-[#E5E5E5] text-center">
+        <p className="text-xs text-[#737373]">© 2025 Spreadfilms. Alle Rechte vorbehalten.</p>
+      </footer>
+    </main>
   );
 }
