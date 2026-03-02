@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
     const { email, pin } = await req.json();
 
     if (!email || !pin) {
-      return NextResponse.json({ error: "E-Mail und PIN erforderlich" }, { status: 400 });
+      return NextResponse.json({ error: "Email and PIN are required." }, { status: 400 });
     }
 
     const supabase = createAdminClient();
@@ -19,21 +19,19 @@ export async function POST(req: NextRequest) {
       .single();
 
     if (!actor) {
-      return NextResponse.json({ error: "Ungültige Zugangsdaten" }, { status: 401 });
+      return NextResponse.json({ error: "Invalid credentials." }, { status: 401 });
     }
 
-    // Ablauf prüfen
     if (!actor.pin_expires_at || new Date(actor.pin_expires_at) < new Date()) {
-      return NextResponse.json({ error: "PIN abgelaufen. Bitte neuen PIN anfordern." }, { status: 401 });
+      return NextResponse.json({ error: "Code expired. Please request a new one." }, { status: 401 });
     }
 
-    // PIN prüfen
     const pinHash = crypto.createHash("sha256").update(pin).digest("hex");
     if (pinHash !== actor.pin_hash) {
-      return NextResponse.json({ error: "Ungültiger PIN" }, { status: 401 });
+      return NextResponse.json({ error: "Invalid code. Please try again." }, { status: 401 });
     }
 
-    // PIN verbrauchen
+    // Invalidate PIN after use
     await supabase
       .from("actors")
       .update({ pin_hash: null, pin_expires_at: null })
@@ -42,6 +40,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true, actor });
   } catch (err: unknown) {
     console.error("PIN verify error:", err);
-    return NextResponse.json({ error: "Interner Fehler" }, { status: 500 });
+    return NextResponse.json({ error: "Internal server error." }, { status: 500 });
   }
 }

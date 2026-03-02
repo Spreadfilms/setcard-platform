@@ -17,7 +17,7 @@ export default function SetCardPreview({ data }: SetCardPreviewProps) {
     <div className="bg-white border border-[#E5E5E5] rounded-2xl overflow-hidden shadow-sm">
       {/* Header */}
       <div className="bg-[#0A0A0A] px-6 py-4">
-        <p className="text-xs font-medium uppercase tracking-[0.15em] text-[#737373]">SetCard Vorschau</p>
+        <p className="text-xs font-medium uppercase tracking-[0.15em] text-[#737373]">SetCard Preview</p>
       </div>
 
       <div className="p-6 space-y-6">
@@ -41,9 +41,9 @@ export default function SetCardPreview({ data }: SetCardPreviewProps) {
           </div>
           <div className="flex-1 min-w-0">
             <h2 className="text-xl font-bold text-[#0A0A0A] truncate">
-              {hasName ? `${personal.first_name} ${personal.last_name}` : "Vorname Nachname"}
+              {hasName ? `${personal.first_name} ${personal.last_name}` : "First Last Name"}
             </h2>
-            {age && <p className="text-sm text-[#737373]">{age} Jahre</p>}
+            {age && <p className="text-sm text-[#737373]">{age} yrs</p>}
             {personal.city && <p className="text-sm text-[#737373]">{personal.city}</p>}
             {skills.experience_level && (
               <span className="inline-block mt-2 px-2 py-0.5 bg-[#F5F5F5] text-[#737373] text-xs rounded-full">
@@ -57,26 +57,26 @@ export default function SetCardPreview({ data }: SetCardPreviewProps) {
         {(physical.height_cm || physical.hair_color || physical.eye_color || physical.body_type) && (
           <div>
             <h3 className="text-xs font-medium uppercase tracking-[0.1em] text-[#737373] mb-3">
-              Körperliche Merkmale
+              Physical
             </h3>
             <div className="grid grid-cols-2 gap-2">
               {physical.height_cm && (
-                <DataItem label="Größe" value={`${physical.height_cm} cm`} />
+                <DataItem label="Height" value={`${physical.height_cm} cm`} />
               )}
               {physical.weight_kg && (
-                <DataItem label="Gewicht" value={`${physical.weight_kg} kg`} />
+                <DataItem label="Weight" value={`${physical.weight_kg} kg`} />
               )}
               {physical.hair_color && (
-                <DataItem label="Haare" value={physical.hair_color} />
+                <DataItem label="Hair" value={physical.hair_color} />
               )}
               {physical.eye_color && (
-                <DataItem label="Augen" value={physical.eye_color} />
+                <DataItem label="Eyes" value={physical.eye_color} />
               )}
               {physical.body_type && (
-                <DataItem label="Figur" value={physical.body_type} />
+                <DataItem label="Build" value={physical.body_type} />
               )}
               {physical.clothing_size_top && (
-                <DataItem label="Größe oben" value={physical.clothing_size_top} />
+                <DataItem label="Size top" value={physical.clothing_size_top} />
               )}
             </div>
           </div>
@@ -86,7 +86,7 @@ export default function SetCardPreview({ data }: SetCardPreviewProps) {
         {skills.acting_skills?.length > 0 && (
           <div>
             <h3 className="text-xs font-medium uppercase tracking-[0.1em] text-[#737373] mb-3">
-              Fähigkeiten
+              Skills
             </h3>
             <div className="flex flex-wrap gap-1.5">
               {skills.acting_skills.map((skill) => (
@@ -105,7 +105,7 @@ export default function SetCardPreview({ data }: SetCardPreviewProps) {
         {skills.languages?.length > 0 && (
           <div>
             <h3 className="text-xs font-medium uppercase tracking-[0.1em] text-[#737373] mb-3">
-              Sprachen
+              Languages
             </h3>
             <div className="space-y-1">
               {skills.languages.map((lang, i) => (
@@ -118,11 +118,11 @@ export default function SetCardPreview({ data }: SetCardPreviewProps) {
           </div>
         )}
 
-        {/* Über mich */}
+        {/* About Me */}
         {about.about_me && (
           <div>
             <h3 className="text-xs font-medium uppercase tracking-[0.1em] text-[#737373] mb-2">
-              Über mich
+              About Me
             </h3>
             <p className="text-sm text-[#0A0A0A] leading-relaxed line-clamp-4">
               {about.about_me}

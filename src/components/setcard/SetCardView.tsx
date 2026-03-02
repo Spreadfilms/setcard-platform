@@ -34,7 +34,7 @@ export default function SetCardView({ actor }: SetCardViewProps) {
               {actor.first_name} {actor.last_name}
             </h1>
             <div className="flex flex-wrap gap-2 mt-2">
-              {age && <Badge>{age} Jahre</Badge>}
+              {age && <Badge>{age} yrs</Badge>}
               {actor.gender && <Badge>{actor.gender}</Badge>}
               {actor.city && <Badge>📍 {actor.city}</Badge>}
               {actor.experience_level && <Badge variant="primary">{actor.experience_level}</Badge>}
@@ -43,32 +43,32 @@ export default function SetCardView({ actor }: SetCardViewProps) {
 
           {/* Körperliche Merkmale */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            {actor.height_cm && <DataItem label="Größe" value={`${actor.height_cm} cm`} />}
-            {actor.weight_kg && <DataItem label="Gewicht" value={`${actor.weight_kg} kg`} />}
-            {actor.hair_color && <DataItem label="Haare" value={actor.hair_color} />}
-            {actor.eye_color && <DataItem label="Augen" value={actor.eye_color} />}
-            {actor.skin_type && <DataItem label="Hauttyp" value={actor.skin_type} />}
-            {actor.body_type && <DataItem label="Figur" value={actor.body_type} />}
-            {actor.clothing_size_top && <DataItem label="Oben" value={actor.clothing_size_top} />}
-            {actor.clothing_size_bottom && <DataItem label="Unten" value={String(actor.clothing_size_bottom)} />}
-            {actor.shoe_size && <DataItem label="Schuh" value={`${actor.shoe_size}`} />}
+            {actor.height_cm && <DataItem label="Height" value={`${actor.height_cm} cm`} />}
+            {actor.weight_kg && <DataItem label="Weight" value={`${actor.weight_kg} kg`} />}
+            {actor.hair_color && <DataItem label="Hair" value={actor.hair_color} />}
+            {actor.eye_color && <DataItem label="Eyes" value={actor.eye_color} />}
+            {actor.skin_type && <DataItem label="Skin" value={actor.skin_type} />}
+            {actor.body_type && <DataItem label="Build" value={actor.body_type} />}
+            {actor.clothing_size_top && <DataItem label="Size top" value={actor.clothing_size_top} />}
+            {actor.clothing_size_bottom && <DataItem label="Size bottom" value={String(actor.clothing_size_bottom)} />}
+            {actor.shoe_size && <DataItem label="Shoe" value={`${actor.shoe_size}`} />}
           </div>
         </div>
       </div>
 
       {/* Über mich */}
       {actor.about_me && (
-        <Section title="Über mich">
+        <Section title="About Me">
           <p className="text-[#0A0A0A] leading-relaxed">{actor.about_me}</p>
         </Section>
       )}
 
-      {/* Fähigkeiten */}
+      {/* Skills */}
       {((actor.acting_skills?.length ?? 0) > 0 || (actor.special_skills?.length ?? 0) > 0 || (actor.sports?.length ?? 0) > 0) && (
-        <Section title="Fähigkeiten">
+        <Section title="Skills">
           {(actor.acting_skills?.length ?? 0) > 0 && (
             <div className="mb-4">
-              <p className="text-xs font-medium text-[#737373] uppercase tracking-wider mb-2">Schauspiel</p>
+              <p className="text-xs font-medium text-[#737373] uppercase tracking-wider mb-2">Acting</p>
               <div className="flex flex-wrap gap-2">
                 {actor.acting_skills!.map((s) => <Badge key={s}>{s}</Badge>)}
               </div>
@@ -76,7 +76,7 @@ export default function SetCardView({ actor }: SetCardViewProps) {
           )}
           {(actor.special_skills?.length ?? 0) > 0 && (
             <div className="mb-4">
-              <p className="text-xs font-medium text-[#737373] uppercase tracking-wider mb-2">Spezial-Skills</p>
+              <p className="text-xs font-medium text-[#737373] uppercase tracking-wider mb-2">Special Skills</p>
               <div className="flex flex-wrap gap-2">
                 {actor.special_skills!.map((s) => <Badge key={s}>{s}</Badge>)}
               </div>
@@ -84,7 +84,7 @@ export default function SetCardView({ actor }: SetCardViewProps) {
           )}
           {(actor.sports?.length ?? 0) > 0 && (
             <div className="mb-4">
-              <p className="text-xs font-medium text-[#737373] uppercase tracking-wider mb-2">Sport</p>
+              <p className="text-xs font-medium text-[#737373] uppercase tracking-wider mb-2">Sports</p>
               <div className="flex flex-wrap gap-2">
                 {actor.sports!.map((s) => <Badge key={s}>{s}</Badge>)}
               </div>
@@ -92,7 +92,7 @@ export default function SetCardView({ actor }: SetCardViewProps) {
           )}
           {(actor.music_skills?.length ?? 0) > 0 && (
             <div>
-              <p className="text-xs font-medium text-[#737373] uppercase tracking-wider mb-2">Musik</p>
+              <p className="text-xs font-medium text-[#737373] uppercase tracking-wider mb-2">Music</p>
               <div className="flex flex-wrap gap-2">
                 {actor.music_skills!.map((s) => <Badge key={s}>{s}</Badge>)}
               </div>
@@ -101,9 +101,9 @@ export default function SetCardView({ actor }: SetCardViewProps) {
         </Section>
       )}
 
-      {/* Sprachen */}
+      {/* Languages */}
       {(actor.languages?.length ?? 0) > 0 && (
-        <Section title="Sprachen">
+        <Section title="Languages">
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {actor.languages!.map((lang, i) => (
               <div key={i} className="flex justify-between items-center p-3 bg-[#F5F5F5] rounded-lg">
@@ -114,7 +114,7 @@ export default function SetCardView({ actor }: SetCardViewProps) {
           </div>
           {(actor.dialects?.length ?? 0) > 0 && (
             <div className="mt-3">
-              <p className="text-xs font-medium text-[#737373] uppercase tracking-wider mb-2">Dialekte</p>
+              <p className="text-xs font-medium text-[#737373] uppercase tracking-wider mb-2">Dialects</p>
               <div className="flex flex-wrap gap-2">
                 {actor.dialects!.map((d) => <Badge key={d}>{d}</Badge>)}
               </div>
@@ -123,9 +123,9 @@ export default function SetCardView({ actor }: SetCardViewProps) {
         </Section>
       )}
 
-      {/* Führerschein */}
+      {/* Driver's License */}
       {(actor.drivers_license?.length ?? 0) > 0 && (
-        <Section title="Führerschein">
+        <Section title="Driver's License">
           <div className="flex flex-wrap gap-2">
             {actor.drivers_license!.map((l) => (
               <span key={l} className="px-3 py-1.5 bg-[#0A0A0A] text-white rounded-full text-sm font-medium">{l}</span>
@@ -134,18 +134,18 @@ export default function SetCardView({ actor }: SetCardViewProps) {
         </Section>
       )}
 
-      {/* Fotos */}
+      {/* Photos */}
       {(actor.halfbody_photo_url || actor.fullbody_photo_url || (actor.additional_photos?.length ?? 0) > 0) && (
-        <Section title="Fotos">
+        <Section title="Photos">
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {actor.halfbody_photo_url && (
               <div className="aspect-[3/4] rounded-xl overflow-hidden">
-                <Image src={actor.halfbody_photo_url} alt="Halbkörper" width={300} height={400} className="w-full h-full object-cover" unoptimized />
+                <Image src={actor.halfbody_photo_url} alt="Half-body" width={300} height={400} className="w-full h-full object-cover" unoptimized />
               </div>
             )}
             {actor.fullbody_photo_url && (
               <div className="aspect-[3/4] rounded-xl overflow-hidden">
-                <Image src={actor.fullbody_photo_url} alt="Ganzkörper" width={300} height={400} className="w-full h-full object-cover" unoptimized />
+                <Image src={actor.fullbody_photo_url} alt="Full-body" width={300} height={400} className="w-full h-full object-cover" unoptimized />
               </div>
             )}
             {actor.additional_photos?.map((url, i) => (
@@ -166,14 +166,14 @@ export default function SetCardView({ actor }: SetCardViewProps) {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 bg-[#0A0A0A] text-white rounded-xl hover:opacity-90 transition-opacity text-sm font-medium"
           >
-            ▶ Showreel ansehen
+            ▶ Watch Showreel
           </a>
         </Section>
       )}
 
-      {/* Agentur */}
+      {/* Agency */}
       {actor.agency_name && (
-        <Section title="Agentur">
+        <Section title="Agency">
           <p className="font-medium text-[#0A0A0A]">{actor.agency_name}</p>
           {actor.agency_contact && <p className="text-sm text-[#737373]">{actor.agency_contact}</p>}
         </Section>

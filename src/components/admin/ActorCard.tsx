@@ -59,7 +59,7 @@ export default function ActorCard({ actor, onStatusChange, onPriorityChange }: A
               )}
             </div>
             <p className="text-xs text-[#737373] mt-0.5">
-              {[age ? `${age} J.` : null, actor.city].filter(Boolean).join(" · ")}
+              {[age ? `${age} yrs` : null, actor.city].filter(Boolean).join(" · ")}
             </p>
             <p className="text-xs text-[#737373]">{formatDate(actor.created_at)}</p>
           </div>
@@ -74,8 +74,8 @@ export default function ActorCard({ actor, onStatusChange, onPriorityChange }: A
           onClick={(e) => e.stopPropagation()}
           className="flex-1 text-xs border border-[#E5E5E5] rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-[#0A0A0A] bg-white"
         >
-          <option value="neu">Neu</option>
-          <option value="abgelehnt">Abgelehnt</option>
+          <option value="neu">New</option>
+          <option value="abgelehnt">Rejected</option>
           <option value="onhold">On Hold</option>
           <option value="pool">Pool</option>
         </select>

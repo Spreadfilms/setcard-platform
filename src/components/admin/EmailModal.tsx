@@ -21,7 +21,7 @@ export default function EmailModal({ actor, adminName, onClose }: EmailModalProp
 
   const generate = async () => {
     if (!instruction.trim()) {
-      toast.error("Bitte gib eine Anweisung ein.");
+      toast.error("Please enter an instruction.");
       return;
     }
     setGenerating(true);
@@ -37,7 +37,7 @@ export default function EmailModal({ actor, adminName, onClose }: EmailModalProp
       setEditedSubject(data.subject);
       setEditedBody(data.body);
     } catch (err: unknown) {
-      toast.error(err instanceof Error ? err.message : "Generierung fehlgeschlagen");
+      toast.error(err instanceof Error ? err.message : "Generation failed");
     } finally {
       setGenerating(false);
     }
@@ -59,10 +59,10 @@ export default function EmailModal({ actor, adminName, onClose }: EmailModalProp
         }),
       });
       if (!res.ok) throw new Error();
-      toast.success("E-Mail gesendet!");
+      toast.success("Email sent!");
       onClose();
     } catch {
-      toast.error("E-Mail konnte nicht gesendet werden.");
+      toast.error("Email could not be sent.");
     } finally {
       setSending(false);
     }
@@ -75,8 +75,8 @@ export default function EmailModal({ actor, adminName, onClose }: EmailModalProp
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-[#E5E5E5]">
           <div>
-            <h2 className="font-semibold text-[#0A0A0A]">E-Mail senden</h2>
-            <p className="text-sm text-[#737373]">an {actor.first_name} {actor.last_name}</p>
+            <h2 className="font-semibold text-[#0A0A0A]">Send Email</h2>
+            <p className="text-sm text-[#737373]">to {actor.first_name} {actor.last_name}</p>
           </div>
           <button onClick={onClose} className="p-2 rounded-lg hover:bg-[#F5F5F5] transition-colors">
             <X className="w-4 h-4" />
@@ -87,17 +87,17 @@ export default function EmailModal({ actor, adminName, onClose }: EmailModalProp
           {/* Anweisung */}
           <div>
             <label className="block text-sm font-medium text-[#0A0A0A] mb-2">
-              Anweisung für die KI
+              Instruction for AI
             </label>
             <textarea
               value={instruction}
               onChange={(e) => setInstruction(e.target.value)}
               rows={3}
-              placeholder={`z.B.: "Schick eine Absage", "Frag nach aktuellem Showreel", "Herzliche Einladung zum Casting am 15. März"`}
+              placeholder={`e.g.: "Send a rejection", "Ask for current showreel", "Invitation to casting on March 15th"`}
               className="w-full px-4 py-3 border border-[#E5E5E5] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#0A0A0A] resize-none"
             />
             <div className="flex flex-wrap gap-2 mt-2">
-              {["Absage senden", "Showreel anfragen", "Profil vervollständigen", "Casting-Einladung"].map((suggestion) => (
+              {["Send rejection", "Request showreel", "Complete profile", "Casting invitation"].map((suggestion) => (
                 <button
                   key={suggestion}
                   type="button"
@@ -116,15 +116,15 @@ export default function EmailModal({ actor, adminName, onClose }: EmailModalProp
             className="w-full py-3 border border-[#0A0A0A] text-[#0A0A0A] rounded-xl text-sm font-medium hover:bg-[#0A0A0A] hover:text-white transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
           >
             {generating && <Loader2 className="w-4 h-4 animate-spin" />}
-            ✦ KI-E-Mail generieren
+            ✦ Generate AI Email
           </button>
 
-          {/* Vorschau */}
+          {/* Preview */}
           {preview && (
             <div className="space-y-3 border-t border-[#E5E5E5] pt-4">
-              <p className="text-sm font-medium text-[#0A0A0A]">Vorschau (bearbeitbar)</p>
+              <p className="text-sm font-medium text-[#0A0A0A]">Preview (editable)</p>
               <div>
-                <label className="text-xs text-[#737373] mb-1 block">Betreff</label>
+                <label className="text-xs text-[#737373] mb-1 block">Subject</label>
                 <input
                   value={editedSubject}
                   onChange={(e) => setEditedSubject(e.target.value)}
@@ -132,7 +132,7 @@ export default function EmailModal({ actor, adminName, onClose }: EmailModalProp
                 />
               </div>
               <div>
-                <label className="text-xs text-[#737373] mb-1 block">Text</label>
+                <label className="text-xs text-[#737373] mb-1 block">Body</label>
                 <textarea
                   value={editedBody}
                   onChange={(e) => setEditedBody(e.target.value)}

@@ -9,17 +9,17 @@ import SetCardPreview from "./SetCardPreview";
 import { ActorFormData, LanguageEntry } from "@/types";
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 
-const STEPS = ["Persönliches", "Körper", "Fähigkeiten", "Medien", "Über mich"];
+const STEPS = ["Personal", "Physical", "Skills", "Media", "About Me"];
 
-const HAIR_COLORS = ["Schwarz", "Braun", "Blond", "Rot", "Grau", "Weiß", "Gefärbt"];
-const EYE_COLORS = ["Braun", "Blau", "Grün", "Grau", "Hazel"];
-const SKIN_TYPES = ["Sehr hell", "Hell", "Mittel", "Dunkel", "Sehr dunkel"];
-const BODY_TYPES = ["schlank", "sportlich", "normal", "kräftig"];
-const ACTING_SKILLS = ["Film", "Theater", "TV", "Synchron", "Moderation", "Werbung", "Musikvideo"];
-const LANGUAGE_LEVELS = ["Muttersprache", "Fließend", "Gut", "Grundkenntnisse"] as const;
+const HAIR_COLORS = ["Black", "Brown", "Blonde", "Red", "Grey", "White", "Dyed"];
+const EYE_COLORS = ["Brown", "Blue", "Green", "Grey", "Hazel"];
+const SKIN_TYPES = ["Very Light", "Light", "Medium", "Dark", "Very Dark"];
+const BODY_TYPES = ["slim", "athletic", "average", "heavy"];
+const ACTING_SKILLS = ["Film", "Theatre", "TV", "Voice Acting", "Hosting", "Commercial", "Music Video"];
+const LANGUAGE_LEVELS = ["Native", "Fluent", "Proficient", "Basic"] as const;
 const DRIVERS_LICENSE = ["B", "A", "BE", "C", "CE", "D"];
 const SIZES_TOP = ["XS", "S", "M", "L", "XL", "XXL"];
-const EXPERIENCE_LEVELS = ["Anfänger", "Fortgeschritten", "Profi"];
+const EXPERIENCE_LEVELS = ["Beginner", "Intermediate", "Professional"];
 
 const INITIAL_FORM: ActorFormData = {
   personal: { first_name: "", last_name: "", email: "", phone: "", date_of_birth: "", gender: "", nationality: "", city: "" },
@@ -54,24 +54,24 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
 
   const validate = (): string | null => {
     if (step === 0) {
-      if (!form.personal.first_name.trim()) return "Vorname ist erforderlich.";
-      if (!form.personal.last_name.trim()) return "Nachname ist erforderlich.";
-      if (!form.personal.email.trim()) return "E-Mail ist erforderlich.";
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.personal.email)) return "Ungültige E-Mail-Adresse.";
-      if (!form.personal.gender) return "Bitte Geschlecht angeben.";
-      if (!form.personal.date_of_birth) return "Geburtsdatum ist erforderlich.";
+      if (!form.personal.first_name.trim()) return "First name is required.";
+      if (!form.personal.last_name.trim()) return "Last name is required.";
+      if (!form.personal.email.trim()) return "Email is required.";
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.personal.email)) return "Invalid email address.";
+      if (!form.personal.gender) return "Please select a gender.";
+      if (!form.personal.date_of_birth) return "Date of birth is required.";
       const age = Math.floor((Date.now() - new Date(form.personal.date_of_birth).getTime()) / (365.25 * 24 * 3600 * 1000));
-      if (age < 16) return "Du musst mindestens 16 Jahre alt sein.";
+      if (age < 16) return "You must be at least 16 years old.";
     }
     if (step === 1) {
-      if (!form.physical.height_cm) return "Größe ist erforderlich.";
+      if (!form.physical.height_cm) return "Height is required.";
       const h = Number(form.physical.height_cm);
-      if (h < 100 || h > 250) return "Größe muss zwischen 100 und 250 cm liegen.";
+      if (h < 100 || h > 250) return "Height must be between 100 and 250 cm.";
     }
     if (step === 3) {
-      if (!form.media.portrait_photo_url) return "Portrait-Foto ist erforderlich.";
-      if (!form.media.halfbody_photo_url) return "Halbkörper-Foto ist erforderlich.";
-      if (!form.media.fullbody_photo_url) return "Ganzkörper-Foto ist erforderlich.";
+      if (!form.media.portrait_photo_url) return "Portrait photo is required.";
+      if (!form.media.halfbody_photo_url) return "Half-body photo is required.";
+      if (!form.media.fullbody_photo_url) return "Full-body photo is required.";
     }
     return null;
   };
@@ -138,12 +138,12 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
 
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.error || "Fehler beim Speichern");
+        throw new Error(data.error || "Error saving");
       }
 
       onSuccess?.();
     } catch (err: unknown) {
-      toast.error(err instanceof Error ? err.message : "Unbekannter Fehler");
+      toast.error(err instanceof Error ? err.message : "Unknown error");
     } finally {
       setLoading(false);
     }
@@ -151,13 +151,12 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Mobile/Desktop Header */}
       <header className="px-6 py-4 border-b border-[#E5E5E5] flex items-center gap-4">
         <a href="/" className="text-sm text-[#737373] hover:text-[#0A0A0A] transition-colors">
-          ← Zurück
+          ← Back
         </a>
         <span className="font-semibold text-[#0A0A0A]">
-          {isUpdate ? "SetCard aktualisieren" : "SetCard anlegen"}
+          {isUpdate ? "Update SetCard" : "Create SetCard"}
         </span>
       </header>
 
@@ -168,149 +167,149 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-          {/* Formular */}
+          {/* Form */}
           <div className="space-y-6">
             <div>
               <h1 className="text-2xl font-bold text-[#0A0A0A]">{STEPS[step]}</h1>
-              <p className="text-sm text-[#737373] mt-1">Schritt {step + 1} von {STEPS.length}</p>
+              <p className="text-sm text-[#737373] mt-1">Step {step + 1} of {STEPS.length}</p>
             </div>
 
-            {/* STEP 0: Persönliche Daten */}
+            {/* STEP 0: Personal */}
             {step === 0 && (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <Field label="Vorname" required>
-                    <Input value={form.personal.first_name} onChange={(v) => updatePersonal("first_name", v)} placeholder="Max" />
+                  <Field label="First Name" required>
+                    <Input value={form.personal.first_name} onChange={(v) => updatePersonal("first_name", v)} placeholder="Jane" />
                   </Field>
-                  <Field label="Nachname" required>
-                    <Input value={form.personal.last_name} onChange={(v) => updatePersonal("last_name", v)} placeholder="Mustermann" />
+                  <Field label="Last Name" required>
+                    <Input value={form.personal.last_name} onChange={(v) => updatePersonal("last_name", v)} placeholder="Doe" />
                   </Field>
                 </div>
-                <Field label="E-Mail" required>
-                  <Input type="email" value={form.personal.email} onChange={(v) => updatePersonal("email", v)} placeholder="max@example.com" />
+                <Field label="Email" required>
+                  <Input type="email" value={form.personal.email} onChange={(v) => updatePersonal("email", v)} placeholder="jane@example.com" />
                 </Field>
-                <Field label="Telefon">
-                  <Input type="tel" value={form.personal.phone} onChange={(v) => updatePersonal("phone", v)} placeholder="+49 123 456789" />
+                <Field label="Phone">
+                  <Input type="tel" value={form.personal.phone} onChange={(v) => updatePersonal("phone", v)} placeholder="+1 234 567890" />
                 </Field>
-                <Field label="Geburtsdatum" required>
+                <Field label="Date of Birth" required>
                   <Input type="date" value={form.personal.date_of_birth} onChange={(v) => updatePersonal("date_of_birth", v)} />
                 </Field>
-                <Field label="Geschlecht" required>
-                  <Select value={form.personal.gender} onChange={(v) => updatePersonal("gender", v)} placeholder="Bitte wählen">
-                    {["männlich", "weiblich", "divers"].map((g) => (
-                      <option key={g} value={g}>{g.charAt(0).toUpperCase() + g.slice(1)}</option>
-                    ))}
+                <Field label="Gender" required>
+                  <Select value={form.personal.gender} onChange={(v) => updatePersonal("gender", v)} placeholder="Please select">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="non-binary">Non-binary</option>
                   </Select>
                 </Field>
-                <Field label="Nationalität">
-                  <Input value={form.personal.nationality} onChange={(v) => updatePersonal("nationality", v)} placeholder="z.B. Deutsch" />
+                <Field label="Nationality">
+                  <Input value={form.personal.nationality} onChange={(v) => updatePersonal("nationality", v)} placeholder="e.g. German" />
                 </Field>
-                <Field label="Stadt">
-                  <Input value={form.personal.city} onChange={(v) => updatePersonal("city", v)} placeholder="z.B. Berlin" />
+                <Field label="City">
+                  <Input value={form.personal.city} onChange={(v) => updatePersonal("city", v)} placeholder="e.g. Berlin" />
                 </Field>
               </div>
             )}
 
-            {/* STEP 1: Körperliche Merkmale */}
+            {/* STEP 1: Physical */}
             {step === 1 && (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <Field label="Größe (cm)" required>
+                  <Field label="Height (cm)" required>
                     <Input type="number" value={String(form.physical.height_cm)} onChange={(v) => updatePhysical("height_cm", v)} placeholder="175" min={100} max={250} />
                   </Field>
-                  <Field label="Gewicht (kg)">
+                  <Field label="Weight (kg)">
                     <Input type="number" value={String(form.physical.weight_kg)} onChange={(v) => updatePhysical("weight_kg", v)} placeholder="70" min={30} max={200} />
                   </Field>
                 </div>
-                <Field label="Haarfarbe">
-                  <Select value={form.physical.hair_color} onChange={(v) => updatePhysical("hair_color", v)} placeholder="Bitte wählen">
+                <Field label="Hair Color">
+                  <Select value={form.physical.hair_color} onChange={(v) => updatePhysical("hair_color", v)} placeholder="Please select">
                     {HAIR_COLORS.map((c) => <option key={c} value={c}>{c}</option>)}
                   </Select>
                 </Field>
-                <Field label="Augenfarbe">
-                  <Select value={form.physical.eye_color} onChange={(v) => updatePhysical("eye_color", v)} placeholder="Bitte wählen">
+                <Field label="Eye Color">
+                  <Select value={form.physical.eye_color} onChange={(v) => updatePhysical("eye_color", v)} placeholder="Please select">
                     {EYE_COLORS.map((c) => <option key={c} value={c}>{c}</option>)}
                   </Select>
                 </Field>
-                <Field label="Hauttyp">
-                  <Select value={form.physical.skin_type} onChange={(v) => updatePhysical("skin_type", v)} placeholder="Bitte wählen">
+                <Field label="Skin Type">
+                  <Select value={form.physical.skin_type} onChange={(v) => updatePhysical("skin_type", v)} placeholder="Please select">
                     {SKIN_TYPES.map((c) => <option key={c} value={c}>{c}</option>)}
                   </Select>
                 </Field>
-                <Field label="Körperbau">
-                  <Select value={form.physical.body_type} onChange={(v) => updatePhysical("body_type", v)} placeholder="Bitte wählen">
+                <Field label="Body Type">
+                  <Select value={form.physical.body_type} onChange={(v) => updatePhysical("body_type", v)} placeholder="Please select">
                     {BODY_TYPES.map((c) => <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</option>)}
                   </Select>
                 </Field>
                 <div className="grid grid-cols-2 gap-4">
-                  <Field label="Konfektionsgröße Oben">
-                    <Select value={form.physical.clothing_size_top} onChange={(v) => updatePhysical("clothing_size_top", v)} placeholder="Größe">
+                  <Field label="Clothing Size Top">
+                    <Select value={form.physical.clothing_size_top} onChange={(v) => updatePhysical("clothing_size_top", v)} placeholder="Size">
                       {SIZES_TOP.map((s) => <option key={s} value={s}>{s}</option>)}
                     </Select>
                   </Field>
-                  <Field label="Konfektionsgröße Unten">
-                    <Input value={form.physical.clothing_size_bottom as string} onChange={(v) => updatePhysical("clothing_size_bottom", v)} placeholder="z.B. M oder 32" />
+                  <Field label="Clothing Size Bottom">
+                    <Input value={form.physical.clothing_size_bottom as string} onChange={(v) => updatePhysical("clothing_size_bottom", v)} placeholder="e.g. M or 32" />
                   </Field>
                 </div>
-                <Field label="Schuhgröße">
+                <Field label="Shoe Size">
                   <Input type="number" value={String(form.physical.shoe_size)} onChange={(v) => updatePhysical("shoe_size", v)} placeholder="42" min={30} max={50} step={0.5} />
                 </Field>
               </div>
             )}
 
-            {/* STEP 2: Fähigkeiten */}
+            {/* STEP 2: Skills */}
             {step === 2 && (
               <div className="space-y-6">
-                <Field label="Erfahrungslevel">
-                  <Select value={form.skills.experience_level} onChange={(v) => updateSkills("experience_level", v)} placeholder="Bitte wählen">
+                <Field label="Experience Level">
+                  <Select value={form.skills.experience_level} onChange={(v) => updateSkills("experience_level", v)} placeholder="Please select">
                     {EXPERIENCE_LEVELS.map((l) => <option key={l} value={l}>{l}</option>)}
                   </Select>
                 </Field>
                 <MultiSelect
-                  label="Schauspiel-Skills"
+                  label="Acting Skills"
                   options={ACTING_SKILLS}
                   value={form.skills.acting_skills}
                   onChange={(v) => updateSkills("acting_skills", v)}
                 />
                 <MultiSelect
-                  label="Führerschein"
+                  label="Driver's License"
                   options={DRIVERS_LICENSE}
                   value={form.skills.drivers_license}
                   onChange={(v) => updateSkills("drivers_license", v)}
                 />
                 <MultiSelect
-                  label="Dialekte"
+                  label="Dialects"
                   value={form.skills.dialects}
                   onChange={(v) => updateSkills("dialects", v)}
                   allowCustom
-                  placeholder="Dialekt eingeben..."
+                  placeholder="Enter dialect..."
                 />
                 <MultiSelect
-                  label="Spezial-Skills"
-                  options={["Reiten", "Fechten", "Kampfsport", "Akrobatik", "Tanz", "Schwimmen", "Klettern"]}
+                  label="Special Skills"
+                  options={["Horse Riding", "Fencing", "Martial Arts", "Acrobatics", "Dance", "Swimming", "Climbing"]}
                   value={form.skills.special_skills}
                   onChange={(v) => updateSkills("special_skills", v)}
                   allowCustom
-                  placeholder="Weiterer Skill..."
+                  placeholder="Add skill..."
                 />
                 <MultiSelect
-                  label="Sport"
+                  label="Sports"
                   value={form.skills.sports}
                   onChange={(v) => updateSkills("sports", v)}
                   allowCustom
-                  placeholder="Sportart eingeben..."
+                  placeholder="Enter sport..."
                 />
                 <MultiSelect
-                  label="Musik"
+                  label="Music"
                   value={form.skills.music_skills}
                   onChange={(v) => updateSkills("music_skills", v)}
                   allowCustom
-                  placeholder="Musikinstrument / Gesang..."
+                  placeholder="Instrument / Vocals..."
                 />
 
-                {/* Sprachen */}
+                {/* Languages */}
                 <div className="space-y-3">
-                  <label className="block text-sm font-medium text-[#0A0A0A]">Sprachen</label>
+                  <label className="block text-sm font-medium text-[#0A0A0A]">Languages</label>
                   {form.skills.languages.map((lang, i) => (
                     <div key={i} className="flex gap-2 items-center">
                       <Input
@@ -320,7 +319,7 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
                           updated[i] = { ...updated[i], language: v };
                           updateSkills("languages", updated);
                         }}
-                        placeholder="Sprache"
+                        placeholder="Language"
                       />
                       <Select
                         value={lang.level}
@@ -344,16 +343,16 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
                   ))}
                   <button
                     type="button"
-                    onClick={() => updateSkills("languages", [...form.skills.languages, { language: "", level: "Gut" }])}
+                    onClick={() => updateSkills("languages", [...form.skills.languages, { language: "", level: "Proficient" }])}
                     className="text-sm text-[#737373] hover:text-[#0A0A0A] transition-colors"
                   >
-                    + Sprache hinzufügen
+                    + Add language
                   </button>
                 </div>
               </div>
             )}
 
-            {/* STEP 3: Medien */}
+            {/* STEP 3: Media */}
             {step === 3 && (
               <div className="space-y-6">
                 <div className="grid grid-cols-3 gap-4">
@@ -366,7 +365,7 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
                     fieldName="portrait"
                   />
                   <PhotoUpload
-                    label="Halbkörper"
+                    label="Half-body"
                     required
                     value={form.media.halfbody_photo_url}
                     onChange={(url) => updateMedia("halfbody_photo_url", url)}
@@ -374,7 +373,7 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
                     fieldName="halfbody"
                   />
                   <PhotoUpload
-                    label="Ganzkörper"
+                    label="Full-body"
                     required
                     value={form.media.fullbody_photo_url}
                     onChange={(url) => updateMedia("fullbody_photo_url", url)}
@@ -385,13 +384,13 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
 
                 <div>
                   <label className="block text-sm font-medium text-[#0A0A0A] mb-2">
-                    Weitere Fotos (optional, max. 5)
+                    Additional Photos (optional, max. 5)
                   </label>
                   <div className="grid grid-cols-3 gap-3">
                     {Array.from({ length: Math.min(5, (form.media.additional_photos?.length || 0) + 1) }).map((_, i) => (
                       <PhotoUpload
                         key={i}
-                        label={`Foto ${i + 1}`}
+                        label={`Photo ${i + 1}`}
                         value={form.media.additional_photos?.[i] || ""}
                         onChange={(url) => {
                           const updated = [...(form.media.additional_photos || [])];
@@ -405,7 +404,7 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
                   </div>
                 </div>
 
-                <Field label="Showreel-Link (YouTube, Vimeo, ...)">
+                <Field label="Showreel Link (YouTube, Vimeo, ...)">
                   <Input
                     type="url"
                     value={form.media.showreel_url}
@@ -416,33 +415,33 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
               </div>
             )}
 
-            {/* STEP 4: Über mich */}
+            {/* STEP 4: About Me */}
             {step === 4 && (
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-[#0A0A0A] mb-2">
-                    Über mich <span className="text-[#737373] font-normal">(max. 500 Zeichen)</span>
+                    About Me <span className="text-[#737373] font-normal">(max. 500 characters)</span>
                   </label>
                   <textarea
                     value={form.about.about_me}
                     onChange={(e) => updateAbout("about_me", e.target.value)}
                     maxLength={500}
                     rows={5}
-                    placeholder="Kurze Vorstellung, Erfahrungen, Besonderheiten..."
+                    placeholder="Brief introduction, experience, special qualities..."
                     className="w-full px-4 py-3 border border-[#E5E5E5] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#0A0A0A] focus:border-transparent resize-none"
                   />
                   <p className="text-xs text-[#737373] text-right">{form.about.about_me.length} / 500</p>
                 </div>
-                <Field label="Agentur (falls vorhanden)">
-                  <Input value={form.about.agency_name} onChange={(v) => updateAbout("agency_name", v)} placeholder="Agenturname" />
+                <Field label="Agency (if applicable)">
+                  <Input value={form.about.agency_name} onChange={(v) => updateAbout("agency_name", v)} placeholder="Agency name" />
                 </Field>
-                <Field label="Agentur Kontakt">
-                  <Input value={form.about.agency_contact} onChange={(v) => updateAbout("agency_contact", v)} placeholder="Ansprechpartner oder E-Mail" />
+                <Field label="Agency Contact">
+                  <Input value={form.about.agency_contact} onChange={(v) => updateAbout("agency_contact", v)} placeholder="Contact person or email" />
                 </Field>
 
-                {/* DSGVO */}
+                {/* Privacy notice */}
                 <div className="p-4 bg-[#F5F5F5] rounded-xl text-xs text-[#737373] leading-relaxed">
-                  Deine Daten werden ausschließlich für Casting-Zwecke bei Spreadfilms gespeichert und nicht an Dritte weitergegeben. Du kannst jederzeit eine Löschung deiner Daten per E-Mail anfordern.
+                  Your data is stored exclusively for casting purposes at Spreadfilms and will not be shared with third parties. You can request deletion of your data at any time by email.
                 </div>
               </div>
             )}
@@ -455,7 +454,7 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
                 disabled={step === 0}
                 className="flex items-center gap-2 px-6 py-3 border border-[#E5E5E5] rounded-xl text-sm font-medium text-[#0A0A0A] hover:border-[#737373] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
               >
-                <ChevronLeft className="w-4 h-4" /> Zurück
+                <ChevronLeft className="w-4 h-4" /> Back
               </button>
 
               {step < STEPS.length - 1 ? (
@@ -464,7 +463,7 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
                   onClick={next}
                   className="flex items-center gap-2 px-6 py-3 bg-[#0A0A0A] text-white rounded-xl text-sm font-medium hover:opacity-90 transition-opacity"
                 >
-                  Weiter <ChevronRight className="w-4 h-4" />
+                  Next <ChevronRight className="w-4 h-4" />
                 </button>
               ) : (
                 <button
@@ -474,7 +473,7 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
                   className="flex items-center gap-2 px-8 py-3 bg-[#0A0A0A] text-white rounded-xl text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
                 >
                   {loading && <Loader2 className="w-4 h-4 animate-spin" />}
-                  {isUpdate ? "Speichern" : "Absenden"}
+                  {isUpdate ? "Save" : "Submit"}
                 </button>
               )}
             </div>
@@ -490,7 +489,7 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
         <div className="lg:hidden mt-8">
           <details className="group">
             <summary className="flex items-center justify-between px-4 py-3 bg-[#F5F5F5] rounded-xl cursor-pointer text-sm font-medium">
-              Vorschau anzeigen
+              Show preview
               <ChevronRight className="w-4 h-4 group-open:rotate-90 transition-transform" />
             </summary>
             <div className="mt-4">
@@ -503,7 +502,6 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
   );
 }
 
-// Hilfskomponenten
 function Field({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) {
   return (
     <div className="space-y-1.5">

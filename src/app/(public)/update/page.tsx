@@ -18,7 +18,7 @@ export default function UpdatePage() {
 
   const requestPin = async () => {
     if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      toast.error("Bitte eine gültige E-Mail-Adresse eingeben.");
+      toast.error("Please enter a valid email address.");
       return;
     }
     setLoading(true);
@@ -29,11 +29,11 @@ export default function UpdatePage() {
         body: JSON.stringify({ email }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Fehler");
-      toast.success("PIN wurde an deine E-Mail gesendet.");
+      if (!res.ok) throw new Error(data.error || "Error");
+      toast.success("PIN sent to your email.");
       setPhase("pin");
     } catch (err: unknown) {
-      toast.error(err instanceof Error ? err.message : "Fehler beim Senden");
+      toast.error(err instanceof Error ? err.message : "Error sending PIN");
     } finally {
       setLoading(false);
     }
@@ -41,7 +41,7 @@ export default function UpdatePage() {
 
   const verifyPin = async () => {
     if (pin.length !== 6) {
-      toast.error("Bitte alle 6 Stellen eingeben.");
+      toast.error("Please enter all 6 digits.");
       return;
     }
     setLoading(true);
@@ -52,11 +52,11 @@ export default function UpdatePage() {
         body: JSON.stringify({ email, pin }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Ungültige PIN");
+      if (!res.ok) throw new Error(data.error || "Invalid PIN");
       setActor(data.actor);
       setPhase("form");
     } catch (err: unknown) {
-      toast.error(err instanceof Error ? err.message : "PIN ungültig");
+      toast.error(err instanceof Error ? err.message : "Invalid PIN");
       setPin("");
     } finally {
       setLoading(false);
@@ -130,10 +130,10 @@ export default function UpdatePage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-[#0A0A0A]">SetCard aktualisiert!</h1>
-          <p className="text-[#737373]">Deine Änderungen wurden erfolgreich gespeichert.</p>
+          <h1 className="text-2xl font-bold text-[#0A0A0A]">SetCard updated!</h1>
+          <p className="text-[#737373]">Your changes have been saved successfully.</p>
           <a href="/" className="inline-flex items-center justify-center px-8 py-3 bg-[#0A0A0A] text-white rounded-xl hover:opacity-90 transition-opacity">
-            Zur Startseite
+            Back to home
           </a>
         </div>
       </div>
@@ -143,8 +143,8 @@ export default function UpdatePage() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <header className="px-6 py-4 border-b border-[#E5E5E5] flex items-center gap-4">
-        <a href="/" className="text-sm text-[#737373] hover:text-[#0A0A0A] transition-colors">← Zurück</a>
-        <span className="font-semibold text-[#0A0A0A]">SetCard aktualisieren</span>
+        <a href="/" className="text-sm text-[#737373] hover:text-[#0A0A0A] transition-colors">← Back</a>
+        <span className="font-semibold text-[#0A0A0A]">Update SetCard</span>
       </header>
 
       <div className="flex-1 flex items-center justify-center px-6 py-12">
@@ -152,8 +152,8 @@ export default function UpdatePage() {
           {phase === "email" && (
             <>
               <div className="text-center space-y-2">
-                <h1 className="text-2xl font-bold text-[#0A0A0A]">E-Mail eingeben</h1>
-                <p className="text-sm text-[#737373]">Wir senden dir einen 6-stelligen PIN zur Verifizierung.</p>
+                <h1 className="text-2xl font-bold text-[#0A0A0A]">Enter your email</h1>
+                <p className="text-sm text-[#737373]">We will send you a 6-digit PIN to verify your identity.</p>
               </div>
               <div className="space-y-4">
                 <input
@@ -161,7 +161,7 @@ export default function UpdatePage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && requestPin()}
-                  placeholder="deine@email.de"
+                  placeholder="your@email.com"
                   className="w-full px-4 py-4 border border-[#E5E5E5] rounded-xl text-base focus:outline-none focus:ring-2 focus:ring-[#0A0A0A] focus:border-transparent"
                   autoFocus
                 />
@@ -171,7 +171,7 @@ export default function UpdatePage() {
                   className="w-full py-4 bg-[#0A0A0A] text-white font-medium rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {loading && <Loader2 className="w-4 h-4 animate-spin" />}
-                  PIN anfordern
+                  Request PIN
                 </button>
               </div>
             </>
@@ -180,10 +180,10 @@ export default function UpdatePage() {
           {phase === "pin" && (
             <>
               <div className="text-center space-y-2">
-                <h1 className="text-2xl font-bold text-[#0A0A0A]">PIN eingeben</h1>
+                <h1 className="text-2xl font-bold text-[#0A0A0A]">Enter PIN</h1>
                 <p className="text-sm text-[#737373]">
-                  Wir haben einen PIN an <strong>{email}</strong> gesendet.<br />
-                  Gültig für 10 Minuten.
+                  We sent a PIN to <strong>{email}</strong>.<br />
+                  Valid for 10 minutes.
                 </p>
               </div>
               <PinInput value={pin} onChange={setPin} disabled={loading} />
@@ -193,13 +193,13 @@ export default function UpdatePage() {
                 className="w-full py-4 bg-[#0A0A0A] text-white font-medium rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {loading && <Loader2 className="w-4 h-4 animate-spin" />}
-                Bestätigen
+                Confirm
               </button>
               <button
                 onClick={() => { setPhase("email"); setPin(""); }}
                 className="w-full text-center text-sm text-[#737373] hover:text-[#0A0A0A] transition-colors"
               >
-                Andere E-Mail verwenden
+                Use a different email
               </button>
             </>
           )}

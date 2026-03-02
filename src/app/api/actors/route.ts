@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { resend, FROM_EMAIL, FROM_NAME } from "@/lib/resend";
+import { sendEmail, emailTemplates } from "@/lib/email";
 
 export async function POST(req: NextRequest) {
   try {
@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
 
     if (existing) {
       return NextResponse.json(
-        { error: "Diese E-Mail-Adresse ist bereits registriert. Nutze 'SetCard aktualisieren'." },
+        { error: "This email address is already registered. Please use 'Update SetCard' instead." },
         { status: 409 }
       );
     }
@@ -29,30 +29,21 @@ export async function POST(req: NextRequest) {
 
     if (error) throw error;
 
-    // Bestätigungs-E-Mail senden
+    // Send confirmation email
     try {
-      await resend.emails.send({
-        from: `${FROM_NAME} <${FROM_EMAIL}>`,
+      await sendEmail({
         to: body.email,
-        subject: "Deine SetCard-Bewerbung bei Spreadfilms",
-        html: `
-          <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-            <h2>Vielen Dank, ${body.first_name}!</h2>
-            <p>Wir haben deine SetCard-Bewerbung erhalten und werden sie in Kürze prüfen.</p>
-            <p>Du erhältst eine Rückmeldung von uns, sobald wir dein Profil gesichtet haben.</p>
-            <br>
-            <p>Mit freundlichen Grüßen,<br>Das Spreadfilms Casting-Team</p>
-          </div>
-        `,
+        subject: "Your Spreadfilms SetCard application",
+        html: emailTemplates.confirmation(body.first_name),
       });
     } catch {
-      // E-Mail-Fehler nicht blockieren
+      // Don't block response if email fails
     }
 
     return NextResponse.json({ success: true, id: data.id }, { status: 201 });
   } catch (err: unknown) {
     console.error("POST /api/actors:", err);
-    return NextResponse.json({ error: "Interner Fehler" }, { status: 500 });
+    return NextResponse.json({ error: "Internal server error." }, { status: 500 });
   }
 }
 
@@ -83,6 +74,6 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(data);
   } catch (err: unknown) {
-    return NextResponse.json({ error: "Interner Fehler" }, { status: 500 });
+    return NextResponse.json({ error: "Internal server error." }, { status: 500 });
   }
 }

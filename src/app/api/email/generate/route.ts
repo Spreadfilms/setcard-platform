@@ -18,43 +18,41 @@ export async function POST(req: NextRequest) {
       .single();
 
     if (error || !actor) {
-      return NextResponse.json({ error: "Schauspieler nicht gefunden" }, { status: 404 });
+      return NextResponse.json({ error: "Actor not found." }, { status: 404 });
     }
-
-    const anrede = actor.gender === "männlich" ? "Sehr geehrter Herr" : actor.gender === "weiblich" ? "Sehr geehrte Frau" : "Sehr geehrte(r)";
 
     const message = await anthropic.messages.create({
       model: "claude-sonnet-4-6",
       max_tokens: 1024,
-      system: `Du bist ein freundlicher, professioneller Casting-Assistent der Produktionsfirma Spreadfilms.
-Schreibe formelle aber warmherzige E-Mails auf Deutsch.
-Verwende "Sie" als Anrede.
-Halte die E-Mail kurz und auf den Punkt (max. 150 Wörter).
-Antworte im Format:
-BETREFF: [Betreff hier]
+      system: `You are a friendly, professional casting assistant for the production company Spreadfilms.
+Write formal yet warm emails in English.
+Keep emails concise and to the point (max 150 words).
+Always address the actor by their first name.
+Reply in this exact format:
+SUBJECT: [subject here]
 ---
-[E-Mail-Text hier]`,
+[email body here]`,
       messages: [
         {
           role: "user",
-          content: `Schreibe eine E-Mail an den Schauspieler ${actor.first_name} ${actor.last_name} (${anrede} ${actor.last_name}).
-Anweisung: ${instruction}
-Absender: ${adminName || "Das Spreadfilms Casting-Team"}`,
+          content: `Write an email to actor ${actor.first_name} ${actor.last_name}.
+Instruction: ${instruction}
+Sender: ${adminName || "The Spreadfilms Casting Team"}`,
         },
       ],
     });
 
     const content = message.content[0];
-    if (content.type !== "text") throw new Error("Ungültige KI-Antwort");
+    if (content.type !== "text") throw new Error("Invalid AI response.");
 
     const text = content.text;
-    const subjectMatch = text.match(/BETREFF:\s*(.+)/);
-    const subject = subjectMatch ? subjectMatch[1].trim() : "Nachricht von Spreadfilms";
-    const body = text.replace(/BETREFF:.+\n---\n?/, "").trim();
+    const subjectMatch = text.match(/SUBJECT:\s*(.+)/);
+    const subject = subjectMatch ? subjectMatch[1].trim() : "Message from Spreadfilms";
+    const body = text.replace(/SUBJECT:.+\n---\n?/, "").trim();
 
     return NextResponse.json({ subject, body });
   } catch (err: unknown) {
     console.error("Email generate error:", err);
-    return NextResponse.json({ error: "KI-Generierung fehlgeschlagen" }, { status: 500 });
+    return NextResponse.json({ error: "AI generation failed." }, { status: 500 });
   }
 }

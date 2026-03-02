@@ -25,15 +25,15 @@ export default function NeuPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h1 className="text-3xl font-bold text-[#0A0A0A]">Vielen Dank!</h1>
+          <h1 className="text-3xl font-bold text-[#0A0A0A]">Thank you!</h1>
           <p className="text-[#737373] leading-relaxed">
-            Vielen Dank für deine Bewerbung! Wir haben deine SetCard erhalten und melden uns bei dir, sobald wir sie geprüft haben.
+            Thank you for your application! We have received your SetCard and will get back to you once we have reviewed it.
           </p>
           <a
             href="/"
             className="inline-flex items-center justify-center px-8 py-3 bg-[#0A0A0A] text-white font-medium rounded-xl hover:opacity-90 transition-opacity"
           >
-            Zurück zur Startseite
+            Back to home
           </a>
         </div>
       </div>

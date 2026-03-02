@@ -6,10 +6,10 @@ import ActorCard from "./ActorCard";
 import { toast } from "sonner";
 
 const COLUMNS: { id: ActorStatus; label: string; color: string }[] = [
-  { id: "neu", label: "Neu", color: "bg-[#737373]" },
+  { id: "neu", label: "New", color: "bg-[#737373]" },
   { id: "onhold", label: "On Hold", color: "bg-[#EAB308]" },
   { id: "pool", label: "Pool", color: "bg-[#22C55E]" },
-  { id: "abgelehnt", label: "Abgelehnt", color: "bg-[#EF4444]" },
+  { id: "abgelehnt", label: "Rejected", color: "bg-[#EF4444]" },
 ];
 
 interface KanbanBoardProps {
@@ -28,9 +28,9 @@ export default function KanbanBoard({ initialActors }: KanbanBoardProps) {
         body: JSON.stringify({ status }),
       });
       if (!res.ok) throw new Error();
-      toast.success("Status aktualisiert");
+      toast.success("Status updated");
     } catch {
-      toast.error("Fehler beim Aktualisieren");
+      toast.error("Error updating status");
       setActors(initialActors);
     }
   }, [initialActors]);
@@ -44,9 +44,9 @@ export default function KanbanBoard({ initialActors }: KanbanBoardProps) {
         body: JSON.stringify({ cast_priority: priority }),
       });
       if (!res.ok) throw new Error();
-      toast.success("Priorität aktualisiert");
+      toast.success("Priority updated");
     } catch {
-      toast.error("Fehler beim Aktualisieren");
+      toast.error("Error updating priority");
     }
   }, []);
 
@@ -69,7 +69,7 @@ export default function KanbanBoard({ initialActors }: KanbanBoardProps) {
             <div className="space-y-2 min-h-[100px]">
               {colActors.length === 0 ? (
                 <div className="border-2 border-dashed border-[#E5E5E5] rounded-xl h-24 flex items-center justify-center">
-                  <p className="text-xs text-[#737373]">Keine Einträge</p>
+                  <p className="text-xs text-[#737373]">No entries</p>
                 </div>
               ) : (
                 colActors.map((actor) => (

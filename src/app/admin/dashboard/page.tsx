@@ -48,7 +48,7 @@ export default async function DashboardPage({ searchParams }: Props) {
         </div>
         <form action="/api/auth/logout" method="POST">
           <button className="text-sm text-[#737373] hover:text-[#0A0A0A] transition-colors">
-            Abmelden
+            Sign Out
           </button>
         </form>
       </header>
@@ -57,9 +57,9 @@ export default async function DashboardPage({ searchParams }: Props) {
         {/* Stats */}
         <div className="grid grid-cols-3 gap-4">
           {[
-            { label: "Gesamt", value: stats.total },
-            { label: "Neu eingegangen", value: stats.neu },
-            { label: "Im Pool", value: stats.pool },
+            { label: "Total", value: stats.total },
+            { label: "New", value: stats.neu },
+            { label: "In Pool", value: stats.pool },
           ].map((stat) => (
             <div key={stat.label} className="bg-white rounded-xl border border-[#E5E5E5] p-4">
               <p className="text-2xl font-bold text-[#0A0A0A]">{stat.value}</p>
