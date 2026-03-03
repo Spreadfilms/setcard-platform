@@ -3,23 +3,18 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import ProgressSteps from "@/components/shared/ProgressSteps";
-import MultiSelect from "@/components/shared/MultiSelect";
 import PhotoUpload from "@/components/shared/PhotoUpload";
 import SetCardPreview from "./SetCardPreview";
-import { ActorFormData, LanguageEntry } from "@/types";
+import { ActorFormData } from "@/types";
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 
-const STEPS = ["Personal", "Physical", "Skills", "Media", "About Me"];
+const STEPS = ["Personal", "Physical", "Media"];
 
 const HAIR_COLORS = ["Black", "Brown", "Blonde", "Red", "Grey", "White", "Dyed"];
 const EYE_COLORS = ["Brown", "Blue", "Green", "Grey", "Hazel"];
 const SKIN_TYPES = ["Very Light", "Light", "Medium", "Dark", "Very Dark"];
 const BODY_TYPES = ["slim", "athletic", "average", "heavy"];
-const ACTING_SKILLS = ["Film", "Theatre", "TV", "Voice Acting", "Hosting", "Commercial", "Music Video"];
-const LANGUAGE_LEVELS = ["Native", "Fluent", "Proficient", "Basic"] as const;
-const DRIVERS_LICENSE = ["B", "A", "BE", "C", "CE", "D"];
 const SIZES_TOP = ["XS", "S", "M", "L", "XL", "XXL"];
-const EXPERIENCE_LEVELS = ["Beginner", "Intermediate", "Professional"];
 
 const INITIAL_FORM: ActorFormData = {
   personal: { first_name: "", last_name: "", email: "", phone: "", date_of_birth: "", gender: "", nationality: "", city: "" },
@@ -45,12 +40,8 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
     setForm((f) => ({ ...f, personal: { ...f.personal, [field]: value } }));
   const updatePhysical = (field: string, value: string | number) =>
     setForm((f) => ({ ...f, physical: { ...f.physical, [field]: value } }));
-  const updateSkills = (field: string, value: unknown) =>
-    setForm((f) => ({ ...f, skills: { ...f.skills, [field]: value } }));
   const updateMedia = (field: string, value: string | string[]) =>
     setForm((f) => ({ ...f, media: { ...f.media, [field]: value } }));
-  const updateAbout = (field: string, value: string) =>
-    setForm((f) => ({ ...f, about: { ...f.about, [field]: value } }));
 
   const validate = (): string | null => {
     if (step === 0) {
@@ -60,15 +51,13 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.personal.email)) return "Invalid email address.";
       if (!form.personal.gender) return "Please select a gender.";
       if (!form.personal.date_of_birth) return "Date of birth is required.";
-      const age = Math.floor((Date.now() - new Date(form.personal.date_of_birth).getTime()) / (365.25 * 24 * 3600 * 1000));
-      if (age < 16) return "You must be at least 16 years old.";
     }
     if (step === 1) {
       if (!form.physical.height_cm) return "Height is required.";
       const h = Number(form.physical.height_cm);
-      if (h < 100 || h > 250) return "Height must be between 100 and 250 cm.";
+      if (h < 50 || h > 250) return "Height must be between 50 and 250 cm.";
     }
-    if (step === 3) {
+    if (step === 2) {
       if (!form.media.portrait_photo_url) return "Portrait photo is required.";
       if (!form.media.halfbody_photo_url) return "Half-body photo is required.";
       if (!form.media.fullbody_photo_url) return "Full-body photo is required.";
@@ -108,17 +97,6 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
         clothing_size_top: form.physical.clothing_size_top || null,
         clothing_size_bottom: form.physical.clothing_size_bottom || null,
         shoe_size: form.physical.shoe_size ? Number(form.physical.shoe_size) : null,
-        experience_level: form.skills.experience_level || null,
-        acting_skills: form.skills.acting_skills,
-        languages: form.skills.languages,
-        dialects: form.skills.dialects,
-        special_skills: form.skills.special_skills,
-        sports: form.skills.sports,
-        music_skills: form.skills.music_skills,
-        drivers_license: form.skills.drivers_license,
-        agency_name: form.about.agency_name || null,
-        agency_contact: form.about.agency_contact || null,
-        about_me: form.about.about_me || null,
         showreel_url: form.media.showreel_url || null,
         portrait_photo_url: form.media.portrait_photo_url || null,
         halfbody_photo_url: form.media.halfbody_photo_url || null,
@@ -215,10 +193,10 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <Field label="Height (cm)" required>
-                    <Input type="number" value={String(form.physical.height_cm)} onChange={(v) => updatePhysical("height_cm", v)} placeholder="175" min={100} max={250} />
+                    <Input type="number" value={String(form.physical.height_cm)} onChange={(v) => updatePhysical("height_cm", v)} placeholder="175" min={50} max={250} />
                   </Field>
                   <Field label="Weight (kg)">
-                    <Input type="number" value={String(form.physical.weight_kg)} onChange={(v) => updatePhysical("weight_kg", v)} placeholder="70" min={30} max={200} />
+                    <Input type="number" value={String(form.physical.weight_kg)} onChange={(v) => updatePhysical("weight_kg", v)} placeholder="70" min={5} max={200} />
                   </Field>
                 </div>
                 <Field label="Hair Color">
@@ -252,108 +230,13 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
                   </Field>
                 </div>
                 <Field label="Shoe Size">
-                  <Input type="number" value={String(form.physical.shoe_size)} onChange={(v) => updatePhysical("shoe_size", v)} placeholder="42" min={30} max={50} step={0.5} />
+                  <Input type="number" value={String(form.physical.shoe_size)} onChange={(v) => updatePhysical("shoe_size", v)} placeholder="42" min={20} max={50} step={0.5} />
                 </Field>
               </div>
             )}
 
-            {/* STEP 2: Skills */}
+            {/* STEP 2: Media */}
             {step === 2 && (
-              <div className="space-y-6">
-                <Field label="Experience Level">
-                  <Select value={form.skills.experience_level} onChange={(v) => updateSkills("experience_level", v)} placeholder="Please select">
-                    {EXPERIENCE_LEVELS.map((l) => <option key={l} value={l}>{l}</option>)}
-                  </Select>
-                </Field>
-                <MultiSelect
-                  label="Acting Skills"
-                  options={ACTING_SKILLS}
-                  value={form.skills.acting_skills}
-                  onChange={(v) => updateSkills("acting_skills", v)}
-                />
-                <MultiSelect
-                  label="Driver's License"
-                  options={DRIVERS_LICENSE}
-                  value={form.skills.drivers_license}
-                  onChange={(v) => updateSkills("drivers_license", v)}
-                />
-                <MultiSelect
-                  label="Dialects"
-                  value={form.skills.dialects}
-                  onChange={(v) => updateSkills("dialects", v)}
-                  allowCustom
-                  placeholder="Enter dialect..."
-                />
-                <MultiSelect
-                  label="Special Skills"
-                  options={["Horse Riding", "Fencing", "Martial Arts", "Acrobatics", "Dance", "Swimming", "Climbing"]}
-                  value={form.skills.special_skills}
-                  onChange={(v) => updateSkills("special_skills", v)}
-                  allowCustom
-                  placeholder="Add skill..."
-                />
-                <MultiSelect
-                  label="Sports"
-                  value={form.skills.sports}
-                  onChange={(v) => updateSkills("sports", v)}
-                  allowCustom
-                  placeholder="Enter sport..."
-                />
-                <MultiSelect
-                  label="Music"
-                  value={form.skills.music_skills}
-                  onChange={(v) => updateSkills("music_skills", v)}
-                  allowCustom
-                  placeholder="Instrument / Vocals..."
-                />
-
-                {/* Languages */}
-                <div className="space-y-3">
-                  <label className="block text-sm font-medium text-[#0A0A0A]">Languages</label>
-                  {form.skills.languages.map((lang, i) => (
-                    <div key={i} className="flex gap-2 items-center">
-                      <Input
-                        value={lang.language}
-                        onChange={(v) => {
-                          const updated = [...form.skills.languages];
-                          updated[i] = { ...updated[i], language: v };
-                          updateSkills("languages", updated);
-                        }}
-                        placeholder="Language"
-                      />
-                      <Select
-                        value={lang.level}
-                        onChange={(v) => {
-                          const updated = [...form.skills.languages];
-                          updated[i] = { ...updated[i], level: v as LanguageEntry["level"] };
-                          updateSkills("languages", updated);
-                        }}
-                        placeholder="Level"
-                      >
-                        {LANGUAGE_LEVELS.map((l) => <option key={l} value={l}>{l}</option>)}
-                      </Select>
-                      <button
-                        type="button"
-                        onClick={() => updateSkills("languages", form.skills.languages.filter((_, j) => j !== i))}
-                        className="p-2 text-[#737373] hover:text-[#EF4444] transition-colors flex-shrink-0"
-                      >
-                        ×
-                      </button>
-                    </div>
-                  ))}
-                  <button
-                    type="button"
-                    onClick={() => updateSkills("languages", [...form.skills.languages, { language: "", level: "Proficient" }])}
-                    className="text-sm text-[#737373] hover:text-[#0A0A0A] transition-colors"
-                  >
-                    + Add language
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* STEP 3: Media */}
-            {step === 3 && (
               <div className="space-y-6">
                 <div className="grid grid-cols-3 gap-4">
                   <PhotoUpload
@@ -411,32 +294,6 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
                     onChange={(v) => updateMedia("showreel_url", v)}
                     placeholder="https://vimeo.com/..."
                   />
-                </Field>
-              </div>
-            )}
-
-            {/* STEP 4: About Me */}
-            {step === 4 && (
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-[#0A0A0A] mb-2">
-                    About Me <span className="text-[#737373] font-normal">(max. 500 characters)</span>
-                  </label>
-                  <textarea
-                    value={form.about.about_me}
-                    onChange={(e) => updateAbout("about_me", e.target.value)}
-                    maxLength={500}
-                    rows={5}
-                    placeholder="Brief introduction, experience, special qualities..."
-                    className="w-full px-4 py-3 border border-[#E5E5E5] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#0A0A0A] focus:border-transparent resize-none"
-                  />
-                  <p className="text-xs text-[#737373] text-right">{form.about.about_me.length} / 500</p>
-                </div>
-                <Field label="Agency (if applicable)">
-                  <Input value={form.about.agency_name} onChange={(v) => updateAbout("agency_name", v)} placeholder="Agency name" />
-                </Field>
-                <Field label="Agency Contact">
-                  <Input value={form.about.agency_contact} onChange={(v) => updateAbout("agency_contact", v)} placeholder="Contact person or email" />
                 </Field>
 
                 {/* Privacy notice */}

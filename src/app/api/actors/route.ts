@@ -7,20 +7,6 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const supabase = createAdminClient();
 
-    // E-Mail Einzigartigkeit prüfen
-    const { data: existing } = await supabase
-      .from("actors")
-      .select("id")
-      .eq("email", body.email)
-      .single();
-
-    if (existing) {
-      return NextResponse.json(
-        { error: "This email address is already registered. Please use 'Update SetCard' instead." },
-        { status: 409 }
-      );
-    }
-
     const { data, error } = await supabase
       .from("actors")
       .insert([{ ...body, status: "neu" }])

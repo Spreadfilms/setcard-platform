@@ -13,11 +13,14 @@ export async function POST(req: NextRequest) {
 
     const supabase = createAdminClient();
 
-    const { data: actor } = await supabase
+    const { data: actors } = await supabase
       .from("actors")
       .select("id, first_name, pin_expires_at")
       .eq("email", email.toLowerCase())
-      .single();
+      .order("created_at", { ascending: false })
+      .limit(1);
+
+    const actor = actors?.[0] ?? null;
 
     if (!actor) {
       // Don't reveal whether email exists (security)
