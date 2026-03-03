@@ -13,7 +13,7 @@ export function createTransporter() {
   })
 }
 
-export const FROM_EMAIL = 'casting@spreadfilms.de'
+export const FROM_EMAIL = 'info@spreadfilms.de'
 export const FROM_NAME = 'Spreadfilms Casting'
 
 interface SendEmailOptions {
