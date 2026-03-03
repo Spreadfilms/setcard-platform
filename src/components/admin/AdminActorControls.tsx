@@ -65,7 +65,7 @@ export default function AdminActorControls({ actor, shareUrl, emailLogs, adminEm
   };
 
   const exportPdf = () => {
-    window.open(`/api/actors/${actor.id}/pdf`, "_blank");
+    window.open(`/api/actors/${actor.id}/print`, "_blank");
   };
 
   return (

@@ -7,7 +7,12 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Spreadfilms Casting",
-  description: "SetCard Plattform für Schauspieler",
+  description: "Professional SetCard platform for Spreadfilms Casting.",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
@@ -16,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de">
+    <html lang="en">
       <body className={`${inter.className} antialiased`}>
         {children}
         <Toaster position="bottom-right" />
