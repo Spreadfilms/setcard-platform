@@ -50,12 +50,12 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
       if (!form.personal.email.trim()) return "Email is required.";
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.personal.email)) return "Invalid email address.";
       if (!form.personal.gender) return "Please select a gender.";
-      if (!form.personal.date_of_birth) return "Date of birth is required.";
     }
     if (step === 1) {
-      if (!form.physical.height_cm) return "Height is required.";
-      const h = Number(form.physical.height_cm);
-      if (h < 50 || h > 250) return "Height must be between 50 and 250 cm.";
+      if (form.physical.height_cm) {
+        const h = Number(form.physical.height_cm);
+        if (h < 50 || h > 250) return "Height must be between 50 and 250 cm.";
+      }
     }
     if (step === 2) {
       if (!form.media.portrait_photo_url) return "Portrait photo is required.";
@@ -169,7 +169,7 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
                 <Field label="Phone">
                   <Input type="tel" value={form.personal.phone} onChange={(v) => updatePersonal("phone", v)} placeholder="+1 234 567890" />
                 </Field>
-                <Field label="Date of Birth" required>
+                <Field label="Date of Birth">
                   <Input type="date" value={form.personal.date_of_birth} onChange={(v) => updatePersonal("date_of_birth", v)} />
                 </Field>
                 <Field label="Gender" required>
@@ -192,7 +192,7 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
             {step === 1 && (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <Field label="Height (cm)" required>
+                  <Field label="Height (cm)">
                     <Input type="number" value={String(form.physical.height_cm)} onChange={(v) => updatePhysical("height_cm", v)} placeholder="175" min={50} max={250} />
                   </Field>
                   <Field label="Weight (kg)">
