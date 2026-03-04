@@ -86,7 +86,7 @@ const baseTemplate = (content: string) => `
 export const emailTemplates = {
   pin: (firstName: string, pin: string) => baseTemplate(`
     <p class="greeting">Your verification code</p>
-    <p class="text">Hi ${firstName}, use the code below to update your SetCard profile.</p>
+    <p class="text">Hi ${firstName}, use the code below to update your Sedcard profile.</p>
     <div class="pin-box">
       <div class="pin">${pin}</div>
       <div class="pin-hint">Valid for 10 minutes &nbsp;·&nbsp; Do not share this code</div>
@@ -96,11 +96,11 @@ export const emailTemplates = {
 
   confirmation: (firstName: string) => baseTemplate(`
     <p class="greeting">Application received ✓</p>
-    <p class="text">Hi ${firstName}, thank you for submitting your SetCard to Spreadfilms Casting.</p>
+    <p class="text">Hi ${firstName}, thank you for submitting your Sedcard to Spreadfilms Casting.</p>
     <div class="highlight">
       We have received your profile and will review it shortly. You will hear from us once we've had a chance to look it over.
     </div>
-    <p class="text">If you need to update any information, you can always return to the platform and edit your SetCard using your email address and a verification code.</p>
+    <p class="text">If you need to update any information, you can always return to the platform and edit your Sedcard using your email address and a verification code.</p>
     <div class="divider"></div>
     <p class="text" style="font-size:13px; color:#737373;">Your data is stored exclusively for casting purposes at Spreadfilms and is not shared with third parties.</p>
   `),

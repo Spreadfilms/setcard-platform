@@ -17,7 +17,7 @@ export default function SetCardPreview({ data }: SetCardPreviewProps) {
     <div className="bg-white border border-[#E5E5E5] rounded-2xl overflow-hidden shadow-sm">
       {/* Header */}
       <div className="bg-[#0A0A0A] px-6 py-4">
-        <p className="text-xs font-medium uppercase tracking-[0.15em] text-[#737373]">SetCard Preview</p>
+        <p className="text-xs font-medium uppercase tracking-[0.15em] text-[#737373]">Sedcard Preview</p>
       </div>
 
       <div className="p-6 space-y-6">

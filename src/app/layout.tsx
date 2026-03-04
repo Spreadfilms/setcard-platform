@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Spreadfilms Casting",
-  description: "Professional SetCard platform for Spreadfilms Casting.",
+  description: "Professional Sedcard platform for Spreadfilms Casting.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",

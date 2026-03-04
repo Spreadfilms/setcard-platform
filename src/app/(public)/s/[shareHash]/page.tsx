@@ -24,10 +24,13 @@ export default async function PublicSetCardPage({ params }: Props) {
     <div className="min-h-screen bg-white">
       <header className="px-6 py-4 border-b border-[#E5E5E5] flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 bg-[#0A0A0A] rounded-lg" />
+          <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="32" height="32" rx="7" fill="#0A0A0A"/>
+              <text x="16" y="22" fontFamily="system-ui, -apple-system, sans-serif" fontSize="13" fontWeight="800" textAnchor="middle" fill="#FFFFFF">SF</text>
+            </svg>
           <span className="font-semibold text-[#0A0A0A]">Spreadfilms Casting</span>
         </div>
-        <span className="text-xs text-[#737373]">SetCard</span>
+        <span className="text-xs text-[#737373]">Sedcard</span>
       </header>
       <SetCardView actor={actor} />
     </div>

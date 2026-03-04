@@ -130,7 +130,7 @@ export default function UpdatePage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-[#0A0A0A]">SetCard updated!</h1>
+          <h1 className="text-2xl font-bold text-[#0A0A0A]">Sedcard updated!</h1>
           <p className="text-[#737373]">Your changes have been saved successfully.</p>
           <a href="/" className="inline-flex items-center justify-center px-8 py-3 bg-[#0A0A0A] text-white rounded-xl hover:opacity-90 transition-opacity">
             Back to home
@@ -144,7 +144,7 @@ export default function UpdatePage() {
     <div className="min-h-screen bg-white flex flex-col">
       <header className="px-6 py-4 border-b border-[#E5E5E5] flex items-center gap-4">
         <a href="/" className="text-sm text-[#737373] hover:text-[#0A0A0A] transition-colors">← Back</a>
-        <span className="font-semibold text-[#0A0A0A]">Update SetCard</span>
+        <span className="font-semibold text-[#0A0A0A]">Update Sedcard</span>
       </header>
 
       <div className="flex-1 flex items-center justify-center px-6 py-12">

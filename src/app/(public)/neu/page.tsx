@@ -27,7 +27,7 @@ export default function NeuPage() {
           </div>
           <h1 className="text-3xl font-bold text-[#0A0A0A]">Thank you!</h1>
           <p className="text-[#737373] leading-relaxed">
-            Thank you for your application! We have received your SetCard and will get back to you once we have reviewed it.
+            Thank you for your application! We have received your Sedcard and will get back to you once we have reviewed it.
           </p>
           <a
             href="/"

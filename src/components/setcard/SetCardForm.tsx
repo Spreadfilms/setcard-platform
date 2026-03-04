@@ -134,7 +134,7 @@ export default function SetCardForm({ initialData, actorId, isUpdate = false, on
           ← Back
         </a>
         <span className="font-semibold text-[#0A0A0A]">
-          {isUpdate ? "Update SetCard" : "Create SetCard"}
+          {isUpdate ? "Update Sedcard" : "Create Sedcard"}
         </span>
       </header>
 

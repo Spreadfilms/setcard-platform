@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     try {
       await sendEmail({
         to: body.email,
-        subject: "Your Spreadfilms SetCard application",
+        subject: "Your Spreadfilms Sedcard application",
         html: emailTemplates.confirmation(body.first_name),
       });
     } catch {

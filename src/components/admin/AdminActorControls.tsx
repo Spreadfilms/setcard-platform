@@ -52,7 +52,7 @@ export default function AdminActorControls({ actor, shareUrl, emailLogs, adminEm
     try {
       const res = await fetch(`/api/actors/${actor.id}`, { method: "DELETE" });
       if (!res.ok) throw new Error();
-      toast.success("SetCard deleted");
+      toast.success("Sedcard deleted");
       router.push("/admin/dashboard");
     } catch {
       toast.error("Delete failed");
@@ -160,7 +160,7 @@ export default function AdminActorControls({ actor, shareUrl, emailLogs, adminEm
               onClick={() => setShowDeleteConfirm(true)}
               className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#EF4444]/5 transition-colors text-sm text-[#EF4444] text-left"
             >
-              <Trash2 className="w-4 h-4" /> Delete SetCard
+              <Trash2 className="w-4 h-4" /> Delete Sedcard
             </button>
           ) : (
             <div className="p-3 bg-[#EF4444]/5 rounded-xl space-y-2">

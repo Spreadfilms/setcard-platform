@@ -27,7 +27,7 @@ export async function GET(_req: NextRequest, { params }: Params) {
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>SetCard – ${actor.first_name} ${actor.last_name}</title>
+  <title>Sedcard – ${actor.first_name} ${actor.last_name}</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; color: #0A0A0A; background: white; }
@@ -59,7 +59,7 @@ export async function GET(_req: NextRequest, { params }: Params) {
 </head>
 <body>
   <div class="no-print" style="background:#0A0A0A;color:white;padding:12px 24px;display:flex;justify-content:space-between;align-items:center;">
-    <span style="font-size:14px;font-weight:500;">SetCard PDF – ${actor.first_name} ${actor.last_name}</span>
+    <span style="font-size:14px;font-weight:500;">Sedcard PDF – ${actor.first_name} ${actor.last_name}</span>
     <button onclick="window.print()" style="background:white;color:#0A0A0A;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;font-weight:500;">Drucken / Als PDF speichern</button>
   </div>
   <div class="page">
@@ -127,7 +127,7 @@ export async function GET(_req: NextRequest, { params }: Params) {
   return new NextResponse(html, {
     headers: {
       "Content-Type": "text/html; charset=utf-8",
-      "Content-Disposition": `inline; filename="SetCard_${actor.first_name}_${actor.last_name}.pdf"`,
+      "Content-Disposition": `inline; filename="Sedcard_${actor.first_name}_${actor.last_name}.pdf"`,
     },
   });
 }
